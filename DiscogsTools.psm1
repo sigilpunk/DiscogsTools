@@ -1,6 +1,7 @@
 <#
 	TODO:
 	- [!P1] Add pagination support! (-Page, -GetAll)
+	- [!P1] Add pipeline support!
 	- [!P2] Expose FolderID to Get-DiscogCollection
 #>
 
