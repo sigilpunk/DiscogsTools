@@ -2,7 +2,7 @@
 	TODO:
 	- [!P1] Add pagination support! (-Page, -GetAll)
 	- [!P1] Add pipeline support!
-	- [!P2] Expose FolderID to Get-DiscogCollection
+	- [!P2] Expose FolderID to Get-DiscogCollection: DONE!
 #>
 
 $GlobalHeaders = @{
@@ -55,6 +55,9 @@ function Get-DiscogsUsernameFromUri {
 	.PARAMETER Json
 	Return the collection as raw JSON.
 
+	.PARAMETER FolderId
+	Select a folder to request, defaults to 0 (all items)
+
 	.EXAMPLE
 	# Get mxtcha616's collection by username
 	Get-DiscogCollection -Username "mxtcha616"
@@ -87,7 +90,10 @@ function Get-DiscogCollection {
 		[String]$SortOrder,
 
 		[Parameter(Mandatory = $false)]
-		[switch]$Json
+		[switch]$Json,
+
+		[Parameter(Mandatory = $false)]
+		[Int]$FolderId = 0
 	)
 
 	#endregion
@@ -98,7 +104,7 @@ function Get-DiscogCollection {
 		$Username = Get-DiscogsUsernameFromUri -Uri $Uri
 	}
 	
-	$ApiUri = "https://api.discogs.com/users/${Username}/collection/folders/0/releases?"
+	$ApiUri = "https://api.discogs.com/users/${Username}/collection/folders/${FolderId}/releases?"
 
 	if($SortBy) {
 		$ApiUri += "sort=${SortBy}&"
